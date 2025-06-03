@@ -1,2 +1,2 @@
 # githubpoccsispe
-Github POC für die CI/CD Pipeline 
+Github POC für die CI/CD Pipelines
