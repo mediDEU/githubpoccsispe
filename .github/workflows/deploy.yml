@@ -41,28 +41,28 @@ jobs:
   tfsec:
    name: TFsec action
    runs-on: ubuntu-latest
-    steps:
+   steps:
       - name: tfsec
         uses: aquasecurity/tfsec-action@v1.0.3
         with:
-        working_directory: .
-        version: v1.0.3
-        format: default
-        github_token:  ${{ secrets.GITHUB_TOKEN }}
+             working_directory: .
+             version: v1.0.3
+             format: default
+             github_token:  ${{ secrets.GITHUB_TOKEN }}
   
           
     # Install the latest version of Terraform CLI 
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v1
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
-    - name: Terraform Init
-      run: terraform init
+      - name: Terraform Init
+        run: terraform init
 
      # Generates an execution plan for Terraform
-    - name: Terraform Plan
-      run: terraform plan -input=false
+      - name: Terraform Plan
+        run: terraform plan -input=false
 
      # On push to "master", build or change infrastructure according to Terraform configuration files
-    - name: Terraform Apply
-      run: terraform apply -auto-approve
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
