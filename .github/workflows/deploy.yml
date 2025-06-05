@@ -1,7 +1,8 @@
-name: Run Azure Login with the Service Principal secret
+name: Use GitHub CI/CD to manage resources in Azure via Terraform
 on: [push]
 
 jobs:
+  #azure login
   azurelogin:
     runs-on: ubuntu-latest
     steps:
@@ -10,12 +11,11 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
         enable-AzPSSession: true
-    
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v3
 
-#fflint 
+  #fflint 
   tflint:
     name: TFLint
     runs-on: ubuntu-latest
@@ -37,7 +37,7 @@ jobs:
             tflint_disabled_rules:
               terraform_deprecated_interpolation
 
-#tfsec
+  #tfsec
   tfsec:
    name: TFsec action
    runs-on: ubuntu-latest
@@ -50,19 +50,24 @@ jobs:
              format: default
              github_token:  ${{ secrets.GITHUB_TOKEN }}
   
-          
-    # Install the latest version of Terraform CLI 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
+
+  #terraform job
+  tfjob:
+     name: terraform job
+     runs-on: ubuntu-latest
+     steps:
+        # Install the latest version of Terraform CLI 
+       - name: Setup Terraform
+         uses: hashicorp/setup-terraform@v1
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
-      - name: Terraform Init
-        run: terraform init
+       - name: Terraform Init
+         run: terraform init
 
      # Generates an execution plan for Terraform
-      - name: Terraform Plan
-        run: terraform plan -input=false
+       - name: Terraform Plan
+         run: terraform plan -input=false
 
      # On push to "master", build or change infrastructure according to Terraform configuration files
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
+       - name: Terraform Apply
+         run: terraform apply -auto-approve
