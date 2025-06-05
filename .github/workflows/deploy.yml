@@ -2,7 +2,7 @@ name: Run Azure Login with the Service Principal secret
 on: [push]
 
 jobs:
-  test:
+  azurelogin:
     runs-on: ubuntu-latest
     steps:
     - name: Azure Login action
@@ -40,19 +40,25 @@ jobs:
 
     - name: Run TFLint
       run: tflint -f compact
-          
+ 
     # Install the latest version of Terraform CLI 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
-
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       run: terraform init
-
-     # Generates an execution plan for Terraform
+   #formats your Terraform configuration files to a canonical style, ensuring readability and consistency
+    - name: Terraform Format
+      run: terraform fmt
+   #linting terraform 
+    - name: Terraform lint
+      run: tflint 
+   #validate terraform
+    - name: Validate Configuration
+      uses: tf-actions/validate@v1
+  # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: terraform plan -input=false
-
-     # On push to "master", build or change infrastructure according to Terraform configuration files
+  # On push to "master", build or change infrastructure according to Terraform configuration files
     - name: Terraform Apply
       run: terraform apply -auto-approve
