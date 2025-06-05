@@ -1,4 +1,4 @@
-name: Run Azure Login with the Service Principal secret, checkourt Repo and finally create the resources in Azure via IaC using Terraform
+name: Run Azure Login with the Service Principal secret
 on: [push]
 
 jobs:
@@ -15,19 +15,15 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-  #tfsec job
-    tfsec:
-     name: tfsec sarif report
-     runs-on: ubuntu-latest
-      steps:
-      - name: Clone repo
-        uses: actions/checkout@master
-
-      - name: tfsec
-        uses: tfsec/tfsec-sarif-action@main
-        with:
-          sarif_file: tfsec.sarif         
-   
+    # uses tfsec  
+    - name: tfsec action
+      uses: aquasecurity/tfsec-action@v1.0.3
+      with:
+        working_directory: .
+        version: v1.0.3
+        format: default
+        github_token:  ${{ secrets.GITHUB_TOKEN }}
+          
     # Install the latest version of Terraform CLI 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
