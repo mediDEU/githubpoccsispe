@@ -15,6 +15,10 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
+    #validate terraform   
+    - name: Validate Terraform configuration
+      uses: devops-infra/action-terraform-validate@v0.3.1
+
     # uses tfsec  
     - name: tfsec action
       uses: aquasecurity/tfsec-action@v1.0.3
@@ -40,7 +44,8 @@ jobs:
 
     - name: Run TFLint
       run: tflint -f compact
- 
+
+
     # Install the latest version of Terraform CLI 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
