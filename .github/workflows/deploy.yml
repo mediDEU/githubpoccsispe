@@ -14,11 +14,20 @@ jobs:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v3
-      
-   # Use the Super-Lint 
-    - name: Super-Linter
-      uses: super-linter/super-linter@v7.4.0
 
+  #tfsec job
+    tfsec:
+     name: tfsec sarif report
+     runs-on: ubuntu-latest
+      steps:
+      - name: Clone repo
+        uses: actions/checkout@master
+
+      - name: tfsec
+        uses: tfsec/tfsec-sarif-action@main
+        with:
+          sarif_file: tfsec.sarif         
+   
     # Install the latest version of Terraform CLI 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
