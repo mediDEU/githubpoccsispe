@@ -1,4 +1,5 @@
 terraform {
+  required_version = ">= 1.0"
   backend "azurerm" {
     resource_group_name  = "githubpoc"
     storage_account_name = "stcstatefiletfpoc"
