@@ -1,4 +1,4 @@
-name: Run Azure Login with the Service Principal secret
+name: Run Azure Login with the Service Principal secret, checkourt Repo and finally create the resources in Azure via IaC using Terraform
 on: [push]
 
 jobs:
@@ -14,6 +14,10 @@ jobs:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v3
+      
+   # Use the Super-Lint 
+    - name: Super-Linter
+      uses: super-linter/super-linter@v7.4.0
 
     # Install the latest version of Terraform CLI 
     - name: Setup Terraform
