@@ -25,10 +25,21 @@ jobs:
         github_token:  ${{ secrets.GITHUB_TOKEN }}
 
    #uses tflint
-    - name: TFLint
-      uses: pauloconnor/tflint-action@v0.0.2 
+    - name: Setup TFLint
+      uses: terraform-linters/setup-tflint@v4
+      with:
+       tflint_version: v0.52.0
+    
+    - name: Show version
+      run: tflint --version
+
+    - name: Init TFLint
+      run: tflint --init
       env:
-       github_token: ${{ secrets.GITHUB_TOKEN }}     
+       GITHUB_TOKEN: ${{ github.token }}
+
+    - name: Run TFLint
+      run: tflint -f compact
           
     # Install the latest version of Terraform CLI 
     - name: Setup Terraform
