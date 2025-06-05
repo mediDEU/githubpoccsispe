@@ -55,12 +55,7 @@ jobs:
           quiet: true
           soft_fail: true
 
-    - name: Checkov Report
-       working-directory:.
-        run:|
-          while IFS= read -r line; do
-            echo "$line" >> $GITHUB_STEP_SUMMARY
-          done < results_github_failed_only.md
+    
 
     # Install the latest version of Terraform CLI 
     - name: Setup Terraform
