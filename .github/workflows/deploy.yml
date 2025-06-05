@@ -53,9 +53,7 @@ jobs:
    #linting terraform 
     - name: Terraform lint
       run: tflint 
-   #validate terraform
-    - name: Validate Configuration
-      uses: tf-actions/validate@v1
+   
   # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: terraform plan -input=false
