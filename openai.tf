@@ -21,4 +21,6 @@ resource "azurerm_cognitive_deployment" "openaicsideploy" {
 
   sku {
     name = "Standard"
-  }
+  
+}
+}
